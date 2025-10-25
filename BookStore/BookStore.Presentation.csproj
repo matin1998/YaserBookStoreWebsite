@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\WebsiteTemplate\popup\assets\images\demos\demo-6\products\" />
+  </ItemGroup>
+<ItemGroup>
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+</ItemGroup>
+<ItemGroup>
+  <ProjectReference Include="..\BookStore.Application\BookStore.Application.csproj" />
+  <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj" />
+  <ProjectReference Include="..\BookStore.infrastructure\BookStore.infrastructure.csproj" />
+</ItemGroup>
+
+</Project>
