@@ -4,6 +4,7 @@ using BookStore.infrastructure.Repositories;
 using BookStore.Application.Services.Interfaces;
 using BookStore.infrastructure.YaserBookStoreDbContext;
 using BookStore.Domain.Entities.Book;
+using Microsoft.OpenApi.Models;
 namespace BookStore.Presentation;
 
 public class Program
@@ -19,15 +20,24 @@ public class Program
         book.BookDescription = "sdvcfdv";
         bookService.AddBookToDataBase(book);*/
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.Services.AddControllers();
+        builder.Services.AddAuthorization();
+        builder.Services.AddEndpointsApiExplorer();
         // Add services to the container.
         //builder.Services.AddControllersWithViews();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+        });
         var app = builder.Build();
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty; 
+            });
         }
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())

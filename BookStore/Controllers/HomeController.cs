@@ -51,8 +51,8 @@ public class HomeController : ControllerBase
         return book;
     }
     [HttpGet]
-    public List<string> GetListOFBooks()
+    public ActionResult<List<string>> GetListOFBooks()
     {
-        return _bookService.GetListOFBooks();
+         return  _bookService.GetListOFBooks();
     }
 }
