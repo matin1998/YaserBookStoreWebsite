@@ -10,14 +10,14 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        BookStoreDbContext bookStoreDbContext = new BookStoreDbContext();
+        /*BookStoreDbContext bookStoreDbContext = new BookStoreDbContext();
         IBookRepository bookRepository = new BookRepository(bookStoreDbContext);
         IBookService bookService = new BookService(bookRepository);
         Book book = new Book();
         book.BookTitle = "matin";
         book.BookPrice = 200000;
         book.BookDescription = "sdvcfdv";
-        bookService.AddBookToDataBase(book);
+        bookService.AddBookToDataBase(book);*/
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
@@ -30,7 +30,7 @@ public class Program
             app.UseSwaggerUI();
         }
         // Configure the HTTP request pipeline.
-        /*if (!app.Environment.IsDevelopment())
+        if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -44,10 +44,11 @@ public class Program
 
         app.UseAuthorization();
 
-        app.MapControllerRoute(
+        app.MapControllers();
+        /*app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "{controller=Home}/{action=Index}/{id?}");*/
 
-        app.Run();*/
+        app.Run();
     }
 }

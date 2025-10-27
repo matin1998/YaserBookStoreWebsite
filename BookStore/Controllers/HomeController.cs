@@ -17,24 +17,40 @@ public class HomeController : ControllerBase
     }
 
 
-
-    public async Task AddBookToDataBase(Book book)
+    [HttpPost]
+    public async Task<IActionResult> AddBookToDataBase(Book book)
     {
        await _bookService.AddBookToDataBase(book);
+        return RedirectToAction(nameof(GetListOFBooks));
     }
-    public async Task DeleteABook(Book book)
+    [HttpDelete]
+    public async Task<IActionResult> DeleteABook(Book book)
     {
         await _bookService.DeleteABook(book);
+        return RedirectToAction(nameof(GetListOFBooks));
     }
-    public async Task EditABook(Book book)
+    [HttpPut]
+    public async Task<IActionResult> EditABook(Book book)
     {
         await _bookService.EditABook(book);
+        return RedirectToAction(nameof(GetListOFBooks));
     }
-    public async Task<Book> GetABookByIdAsync(int bookId)
+    [HttpGet("id")]
+    public async Task<ActionResult<Book>> GetABookByIdAsync(int id)
     {
-        Book book = await _bookService.GetABookByIdAsync(bookId);
+        if (id < 0) 
+        {
+            return BadRequest("Invalid Id");
+        }
+        Book book = await _bookService.GetABookByIdAsync(id);
+        if (book == null) 
+        {
+            return NotFound();
+        }
+
         return book;
     }
+    [HttpGet]
     public List<string> GetListOFBooks()
     {
         return _bookService.GetListOFBooks();
