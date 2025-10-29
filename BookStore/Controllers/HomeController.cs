@@ -1,12 +1,12 @@
 using System.Diagnostics;
 using BookStore.Application.Services.Interfaces;
-using BookStore.Domain.Entities.Book;
+using BookStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace BookStore.Controllers;
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]/[action]")]
 public class HomeController : ControllerBase
 {
     private readonly IBookService _bookService;

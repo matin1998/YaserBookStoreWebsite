@@ -1,5 +1,4 @@
-﻿using BookStore.Domain.Entities.Book;
-using BookStore.Domain.Entities.Stationary;
+﻿using BookStore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +24,8 @@ public class BookStoreDbContext: DbContext
     public DbSet<Book> Books { get; set; }
 
     public DbSet<Stationary> Stationaries { get; set; }
+
+    public DbSet<Category> Categories { get; set; }
 
     #endregion
 }

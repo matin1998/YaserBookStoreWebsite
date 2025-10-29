@@ -1,4 +1,4 @@
-﻿namespace BookStore.Domain.Entities.Book;
+﻿namespace BookStore.Domain.Entities;
 
 public class Book
 {
@@ -7,4 +7,5 @@ public class Book
     public int BookPrice { get; set; }
     public string? BookDescription { get; set; }
     public int BookInventory {  get; set; }
+    public int CategoryId { get; set; }
 }

@@ -1,6 +1,7 @@
-﻿using BookStore.Domain.Entities.Book;
+﻿using BookStore.Domain.Entities;
 using BookStore.Domain.RepositoryInterfaces;
 using BookStore.infrastructure.YaserBookStoreDbContext;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,9 +40,9 @@ namespace BookStore.infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Book> GetABookByIdAsync(int bookId)
+        public Task<Book> GetABookByIdAsync(int bookId)
         {
-            return _context.Books.FirstOrDefault(p=>p.Id==bookId);
+            return _context.Books.FirstOrDefaultAsync(p=>p.Id==bookId);
         }
 
         public List<string> GetListOfBooks()

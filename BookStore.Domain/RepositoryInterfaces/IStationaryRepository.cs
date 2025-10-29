@@ -1,4 +1,5 @@
-﻿using BookStore.Domain.Entities.Stationary;
+﻿using BookStore.Domain.Entities;
+
 namespace BookStore.Domain.RepositoryInterfaces;
 public interface IStationaryRepository
 {

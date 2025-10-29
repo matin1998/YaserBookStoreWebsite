@@ -18,7 +18,7 @@ public class Program
         book.BookTitle = "matin";
         book.BookPrice = 200000;
         book.BookDescription = "sdvcfdv";
-        bookService.AddBookToDataBase(book);*/
+        bookService.AddCategoryToDataBase(book);*/
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddControllers();
         builder.Services.AddAuthorization();
