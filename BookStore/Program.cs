@@ -3,7 +3,6 @@ using BookStore.Domain.RepositoryInterfaces;
 using BookStore.infrastructure.Repositories;
 using BookStore.Application.Services.Interfaces;
 using BookStore.infrastructure.YaserBookStoreDbContext;
-using BookStore.Domain.Entities.Book;
 using Microsoft.OpenApi.Models;
 namespace BookStore.Presentation;
 
@@ -13,13 +12,18 @@ public class Program
     {
         /*BookStoreDbContext bookStoreDbContext = new BookStoreDbContext();
         IBookRepository bookRepository = new BookRepository(bookStoreDbContext);
-        IBookService bookService = new BookService(bookRepository);
+        ICategoryService bookService = new BookService(bookRepository);
         Book book = new Book();
         book.BookTitle = "matin";
         book.BookPrice = 200000;
         book.BookDescription = "sdvcfdv";
         bookService.AddCategoryToDataBase(book);*/
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddScoped<IBookRepository, BookRepository>();
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<ICategoryService, BookService>();
+        builder.Services.AddScoped<ICategoryService, CategoryService>();
+        builder.Services.AddDbContext<BookStoreDbContext>();
         builder.Services.AddControllers();
         builder.Services.AddAuthorization();
         builder.Services.AddEndpointsApiExplorer();

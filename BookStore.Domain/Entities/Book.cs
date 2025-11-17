@@ -8,4 +8,5 @@ public class Book
     public string? BookDescription { get; set; }
     public int BookInventory {  get; set; }
     public int CategoryId { get; set; }
+    public Category Category { get; set; }
 }

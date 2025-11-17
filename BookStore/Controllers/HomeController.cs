@@ -4,14 +4,14 @@ using BookStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace BookStore.Controllers;
+namespace BookStore.Presentation.Controllers;
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
 public class HomeController : ControllerBase
 {
-    private readonly IBookService _bookService;
+    private readonly ICategoryService _bookService;
 
-    public HomeController(IBookService bookService)
+    public HomeController(ICategoryService bookService)
     {
         _bookService = bookService;
     }
