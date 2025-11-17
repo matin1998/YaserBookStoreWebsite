@@ -9,9 +9,9 @@ namespace BookStore.Presentation.Controllers;
 [Route("api/v1/[controller]/[action]")]
 public class HomeController : ControllerBase
 {
-    private readonly ICategoryService _bookService;
+    private readonly IBookService _bookService;
 
-    public HomeController(ICategoryService bookService)
+    public HomeController(IBookService bookService)
     {
         _bookService = bookService;
     }
