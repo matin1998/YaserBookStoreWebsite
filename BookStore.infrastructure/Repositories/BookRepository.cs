@@ -45,11 +45,9 @@ namespace BookStore.infrastructure.Repositories
             return _context.Books.FirstOrDefaultAsync(p=>p.Id==bookId);
         }
 
-        public List<string> GetListOfBooks()
+        public List<Book> GetListOfBooks()
         {
-            return _context.Books
-                .Select(b=>b.BookTitle)
-                .ToList();
+            return _context.Books.Include(b => b.Category).ToList();
         }
 
     }

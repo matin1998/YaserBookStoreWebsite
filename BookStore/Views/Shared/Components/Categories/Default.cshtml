@@ -1,0 +1,9 @@
+﻿@model List<BookStore.Domain.Entities.Category>
+<ul class="menu-vertical sf-arrows sf-js-enabled" style="touch-action: pan-y;">
+    @foreach (var category in Model) {
+        <li><a asp-controller="book"
+            asp-action="category" 
+            asp-route-categoryId="@category.Id">
+            @category.CategoryTitle</a></li>
+    }
+</ul>

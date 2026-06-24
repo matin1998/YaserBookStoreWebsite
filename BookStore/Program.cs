@@ -4,6 +4,8 @@ using BookStore.infrastructure.Repositories;
 using BookStore.Application.Services.Interfaces;
 using BookStore.infrastructure.YaserBookStoreDbContext;
 using Microsoft.OpenApi.Models;
+using BookStore.Application.Interfaces;
+using BookStore.infrastructure.Services;
 namespace BookStore.Presentation;
 
 public class Program
@@ -23,17 +25,19 @@ public class Program
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<IBookService, BookService>();
         builder.Services.AddScoped<ICategoryService, CategoryService>();
+        builder.Services.AddScoped<IFileService, FileService>();
         builder.Services.AddDbContext<BookStoreDbContext>();
         builder.Services.AddControllers();
         builder.Services.AddAuthorization();
         builder.Services.AddEndpointsApiExplorer();
         // Add services to the container.
-        //builder.Services.AddControllersWithViews();
-        builder.Services.AddSwaggerGen(c =>
+        builder.Services.AddControllersWithViews();
+        var app = builder.Build();
+        /*builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
         });
-        var app = builder.Build();
+        
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -42,7 +46,7 @@ public class Program
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty; 
             });
-        }
+        }*/
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
@@ -59,9 +63,13 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        /*app.MapControllerRoute(
+        app.MapControllerRoute(
+            name: "area",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+        app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");*/
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }

@@ -45,6 +45,9 @@ namespace BookStore.infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");

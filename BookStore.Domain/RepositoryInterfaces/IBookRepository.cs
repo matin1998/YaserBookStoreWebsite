@@ -4,7 +4,7 @@ namespace BookStore.Domain.RepositoryInterfaces;
 
 public interface IBookRepository
 {
-    List<string> GetListOfBooks();
+    List<Book> GetListOfBooks();
 
     Task AddBookToDataBase(Book book);
 

@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 
 namespace BookStore.Presentation.Controllers;
-[ApiController]
-[Route("api/v1/[controller]/[action]")]
-public class HomeController : ControllerBase
+//[ApiController]
+//[Route("api/v1/[controller]/[action]")]
+public class HomeController : Controller
 {
-    private readonly IBookService _bookService;
+    //private readonly IBookService _bookService;
 
-    public HomeController(IBookService bookService)
+    /*public HomeController(IBookService bookService)
     {
         _bookService = bookService;
     }
@@ -49,10 +49,10 @@ public class HomeController : ControllerBase
         }
 
         return book;
-    }
+    }*/
     [HttpGet]
-    public ActionResult<List<string>> GetListOFBooks()
+    public  ActionResult Index()
     {
-         return  _bookService.GetListOFBooks();
+         return View();
     }
 }

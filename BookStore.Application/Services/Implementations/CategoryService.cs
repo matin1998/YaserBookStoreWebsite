@@ -19,11 +19,11 @@ public class CategoryService : ICategoryService
     }
     public async Task AddCategoryToDataBase(Category category)
     {
-        List<string> categories = _categoryRepository.GetListOfCategories();
+        var categories = _categoryRepository.GetListOfCategories();
         bool flag = false;
         foreach (var c in categories)
         {
-            if (c == category.CategoryTitle)
+            if (c.CategoryTitle == category.CategoryTitle)
             {
                 flag = true;
                 break;
@@ -55,7 +55,7 @@ public class CategoryService : ICategoryService
         return category;
     }
 
-    public List<string> GetListOFCategories()
+    public  List<Category> GetListOFCategories()
     {
         return _categoryRepository.GetListOfCategories();
     }

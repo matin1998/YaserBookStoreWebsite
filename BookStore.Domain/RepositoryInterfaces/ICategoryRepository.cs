@@ -9,7 +9,7 @@ namespace BookStore.Domain.RepositoryInterfaces;
 
 public interface ICategoryRepository
 {
-    List<string> GetListOfCategories();
+    List<Category> GetListOfCategories();
 
     Task AddCategoryToDataBase(Category category);
 

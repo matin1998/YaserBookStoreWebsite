@@ -4288,7 +4288,9 @@ p {
 }
 
 .header-7 .top-menu:not(.top-link-menu) ul {
-  min-width: 180px;
+    min-width: 180px;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
 }
 
 @media screen and (max-width: 575px) {
@@ -5033,6 +5035,7 @@ p {
 
 .header-12 .header-bottom .container {
   position: relative;
+  background-color: #333333
 }
 
 .header-12 .header-bottom .container::after {
