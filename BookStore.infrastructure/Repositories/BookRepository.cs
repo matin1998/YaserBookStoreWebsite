@@ -28,9 +28,12 @@ namespace BookStore.infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteABook(Book book)
+        public async Task DeleteABook(int bookId)
         {
-             _context.Books.Remove(book);
+            var book = await GetABookByIdAsync(bookId);
+            if (book == null)
+                return;
+            _context.Books.Remove(book);
             await _context.SaveChangesAsync();
         }
 
@@ -40,14 +43,14 @@ namespace BookStore.infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task<Book> GetABookByIdAsync(int bookId)
+        public async Task<Book?> GetABookByIdAsync(int bookId)
         {
-            return _context.Books.FirstOrDefaultAsync(p=>p.Id==bookId);
+            return await _context.Books.Include(i => i.Images).FirstOrDefaultAsync(p=>p.Id==bookId);
         }
 
         public List<Book> GetListOfBooks()
         {
-            return _context.Books.Include(b => b.Category).ToList();
+            return _context.Books.Include(b => b.Category).Include(i => i.Images).AsSplitQuery().ToList();
         }
 
     }

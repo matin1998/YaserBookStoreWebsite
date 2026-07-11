@@ -1,6 +1,5 @@
-﻿@model BookStore.Application.DTOs.AdminSide.Book.EditBookDTO
+﻿@model BookStore.Application.DTOs.AdminSide.Books.EditBookDTO
 
-<div class="content-wrapper" style="min-height: 265.6px;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -51,7 +50,7 @@
                                 </div>
                                 <div>
                                     <label for="exampleInputEmail1">ویرایش عکس</label>
-                                    <input asp-for="ImageFile" type="file" class="form-control" id="exampleInputEmail1" />
+                                    <input asp-for="NewImages" type="file" multiple id="exampleInputEmail1" class="form-control" />
                                 </div>
                                 <div class="form-group">
                                     <label>دسته بندی</label>
@@ -76,5 +75,3 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
-</div>

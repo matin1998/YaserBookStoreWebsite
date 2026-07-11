@@ -1,6 +1,6 @@
 ﻿@model BookStore.Domain.Entities.Book
 
-<div class="content-wrapper" style="min-height: 265.6px;">
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -30,28 +30,28 @@
                         <form asp-action="DeleteABook" asp-area="AdminPanel" asp-controller="Book" method="post">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Id</label>
-                                    <input type="text" readonly class="form-control" id="exampleInputEmail1" asp-for="Id">
+                                    @* <label for="exampleInputEmail1">Id</label> *@
+                                    <input type="hidden" readonly class="form-control" id="exampleInputEmail1" asp-for="Id">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">عنوان</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="BookTitle" placeholder="عنوان کتاب را وارد کنید">
+                                    <input type="text" class="form-control" id="exampleInputEmail1"  asp-for="BookTitle" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1"></label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="BookPrice" placeholder="قیمت را وارد کنید">
+                                    <input type="text" class="form-control" id="exampleInputEmail1"  asp-for="BookPrice"  readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">موجودی</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="BookInventory" placeholder="موجودی را وارد کنید">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="BookInventory" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">توضیحات</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="BookDescription" placeholder="توضیحات را وارد کنید">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="BookDescription" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">دسته</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="CategoryId" placeholder="دسته کتاب را وارد کنید">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" asp-for="CategoryId" readonly>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -65,5 +65,3 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
-</div>

@@ -1,0 +1,88 @@
+﻿@model BookStore.Application.DTOs.Account.LoginDTO
+<div class="tab-pane fade show active" id="signin" role="tabpanel"
+     aria-labelledby="signin-tab">
+    <form id="loginForm" 
+          asp-controller="Account"
+          asp-action="Login"
+          method="post">
+        @Html.AntiForgeryToken()
+
+        <div id="loginMessage"
+             class="alert alert-danger d-none">
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">نام کاربری یا آدرس ایمیل *</label>
+
+            <input asp-for="Email"
+                   class="form-control"
+                   id="signin-email"
+                   type="text">
+
+            <span asp-validation-for="Email"
+                  class="text-danger"></span>
+        </div><!-- End .form-group -->
+
+        <div class="form-group">
+            <label asp-for="Password">رمز عبور *</label>
+            <input asp-for="Password"
+                   type="password"
+                   class="form-control"
+                   id="signin-password">
+
+            <span asp-validation-for="Password"
+                  class="text-danger"></span>
+        </div><!-- End .form-group -->
+
+        <div class="form-footer">
+
+            <button id="btnLogin"
+                    type="submit"
+                    class="btn btn-outline-primary-2">
+                <span>ورود</span>
+                <i class="icon-long-arrow-left"></i>
+
+            </button>
+
+            <div class="custom-control custom-checkbox">
+
+                <input asp-for="RememberMe"
+                       class="custom-control-input"
+                       id="signin-remember"
+                       type="checkbox">
+
+                <label class="custom-control-label"
+                       for="signin-remember">
+
+                    مرا به خاطر بسپار
+
+                </label>
+
+            </div>
+
+            <a href="#"
+               class="forgot-link">
+
+                فراموشی رمز عبور؟
+
+            </a>
+
+        </div>
+    </form>
+    <div class="form-choice">
+        <p class="text-center">یا ورود با</p>
+        <div class="row">
+            <div class="col-sm-6">
+                <a href="#" class="btn btn-login btn-g">
+                    <i class="icon-google"></i>
+                    حساب گوگل
+                </a>
+            </div><!-- End .col-6 -->
+            <div class="col-sm-6">
+                <a href="#" class="btn btn-login btn-f">
+                    <i class="icon-facebook-f"></i>
+                    حساب فیسبوک
+                </a>
+            </div><!-- End .col-6 -->
+        </div><!-- End .row -->
+    </div><!-- End .form-choice -->
+</div><!-- .End .tab-pane -->

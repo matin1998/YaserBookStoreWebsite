@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\books\" />
+    <Folder Include="Areas\CustomerPanel\Views\" />
+    <Folder Include="wwwroot\images\books\big\" />
+    <Folder Include="wwwroot\images\books\medium\" />
+    <Folder Include="wwwroot\images\books\thumb\" />
+    <Folder Include="wwwroot\images\books\small\" />
     <Folder Include="wwwroot\WebsiteTemplate\popup\assets\images\demos\demo-6\products\" />
   </ItemGroup>
 <ItemGroup>
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

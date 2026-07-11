@@ -1,4 +1,4 @@
-﻿using BookStore.Application.DTOs.AdminSide.Book;
+﻿using BookStore.Application.DTOs.AdminSide.Books;
 using BookStore.Application.Services.Implementations;
 using BookStore.Application.Services.Interfaces;
 using BookStore.Domain.Entities;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookStore.Presentation.Areas.AdminPanel.Controllers;
 
 [Area("AdminPanel")]
-public class BookController : Controller
+public class BookController : AdminBaseController
 {
     #region Ctor
 
@@ -33,7 +33,7 @@ public class BookController : Controller
 
     #endregion
 
-    #region Create An book
+    #region Create A book
 
     [HttpGet]
     public IActionResult CreateABook()
@@ -101,9 +101,9 @@ public class BookController : Controller
     #region Delete A book
 
     [HttpGet]
-    public async Task<IActionResult> DeleteABook(int bookId)
+    public async Task<IActionResult> DeleteAbook(int bookId)
     {
-        #region Get An book By Id
+        #region Get A book By Id
 
         var book = await _bookService.GetABookByIdAsync(bookId);
 
@@ -113,11 +113,11 @@ public class BookController : Controller
     }
 
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteABook(Book book)
+    public async Task<IActionResult> DeleteABook(int bookId)
     {
         #region Update A book
 
-        await _bookService.DeleteABook(book);
+        await _bookService.DeleteABook(bookId);
 
         return RedirectToAction(nameof(ListOfBooks));
 

@@ -94,8 +94,14 @@
                                                 <figure class="product-media">
                                                     <span class="product-label label-new">جدید</span>
                                                     <a href="product.html">
-                                                        <img src="/images/books/@book.ImageName" alt="تصویر محصول"
-                                                        class="product-image">
+                                                        @foreach (var image in book.Images)
+                                                        {
+                                                            if (image.IsMainImage)
+                                                            {
+                                                                <img src="/images/books/medium/@image.ImageName" alt="تصویر محصول"
+                                                                class="product-image">
+                                                            }
+                                                        }
                                                     </a>
 
                                                     <div class="product-action-vertical">
@@ -129,8 +135,8 @@
                                                     </div><!-- End .product-cat -->
                                                     <h3 class="product-title text-center">
                                                         <a asp-controller="Book"
-                                                           asp-action="Details"
-                                                           asp-route-bookId="@book.Id">
+                                                        asp-action="Details"
+                                                        asp-route-bookId="@book.Id">
                                                             @book.BookTitle
                                                         </a>
                                                     </h3><!-- End .product-title -->
@@ -146,11 +152,14 @@
                                                     </div><!-- End .rating-container -->
 
                                                     <div class="product-nav product-nav-thumbs">
-                                                        <a href="#" class="active">
-                                                            <img src="/WebsiteTemplate/assets/images/products/product-4-thumb.jpg"
+                                                        @foreach(var image in book.Images)
+                                                        {
+                                                            <a href="#">
+                                                            <img src="/images/books/thumb/@image.ImageName"
                                                             alt="product desc">
-                                                        </a>
-                                                        <a href="#">
+                                                            </a>
+                                                        } 
+                                                        @* <a href="#">
                                                             <img src="/WebsiteTemplate/assets/images/products/product-4-2-thumb.jpg"
                                                             alt="product desc">
                                                         </a>
@@ -158,7 +167,7 @@
                                                         <a href="#">
                                                             <img src="/WebsiteTemplate/assets/images/products/product-4-3-thumb.jpg"
                                                             alt="product desc">
-                                                        </a>
+                                                        </a> *@
                                                     </div><!-- End .product-nav -->
                                                 </div><!-- End .product-body -->
                                             </div><!-- End .product -->

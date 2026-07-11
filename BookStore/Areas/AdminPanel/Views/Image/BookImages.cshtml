@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Book Images Page";
+}
+@model BookStore.Application.DTOs.AdminSide.Books.BookImagesDTO
+
+<section class="content mt-3">
+    <div class="container-fluid">
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <h3>مدیریت تصاویر کتاب @Model.BookTitle</h3>
+            </div>
+            <div class="col-md-6 text-left">
+                <a asp-area="AdminPanel"
+                   asp-action="AddImages"
+                   asp-controller="Image"
+                   asp-route-bookId="@Model"
+                   class="btn btn-primary">
+
+                    <i class="fa fa-plus"></i>
+                    افزودن عکس جدید
+                </a>
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var image in Model.Images)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+
+                    <div class="card">
+
+                        <img src="/images/books/medium/@image.ImageName" alt="عکس کتاب"
+                             class="card-img-top"
+                             style="height:250px;object-fit:cover;" />
+                        <div class="card-body text-center">
+                            <div class="mt-2">
+                            @if (image.IsMainImage)
+                            {
+                                    <span class="badge badge-success mb-2">
+                                    
+                                    عکس اصلی
+                                </span>
+                            }
+
+                            @* <div class="mt-2"> *@
+
+                                @if (!image.IsMainImage)
+                                {
+                                    @* <a asp-action="SetMainImage"
+                                       asp-controller="Image"
+                                       asp-route-imageId="@image.Id"
+                                       class="btn btn-warning btn-sm">
+
+                                        <i class="fa fa-star"></i>
+
+                                        عکس اصلی
+                                    </a> *@
+                                    <a class="btn btn-warning btn-sm" style="cursor:pointer;"
+                                       asp-action="SetMainImage"
+                                       asp-area="AdminPanel"
+                                       asp-controller="Image"
+                                       asp-route-imageId="@image.Id">
+                                        <i class="fa fa-star"></i>
+
+                                        عکس اصلی
+                                    </a>
+                                }
+
+                                <a asp-action="DeleteImage"
+                                   asp-controller="Image"
+                                   asp-area="AdminPanel"
+                                   asp-route-imageId="@image.Id"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('آیا از حذف این عکس مطمئن هستید؟')">
+
+                                    <i class="fa fa-trash"></i>
+
+                                    حذف
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+</section>
+       @*  </div> *@

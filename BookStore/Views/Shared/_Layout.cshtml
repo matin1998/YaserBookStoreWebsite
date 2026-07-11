@@ -75,14 +75,62 @@
                         </div><!-- End .header-search -->
 
                         <div class="header-dropdown-link">
-                            <div class="account">
-                                <a href="dashboard.html" title="پروفایل من">
-                                    <div class="icon">
-                                        <i class="icon-user"></i>
+                            @* <div class="account"> *@
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                @* <div class="account"> *@
+                                <div class="dropdown cart-dropdown">
+                                    <div class="account">
+                                    <a  href="dashboard.html" data-toggle="modal" title="پروفایل من">
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                        <p>@User.FindFirst("FullName")?.Value</p>
+                                        
+                                    </a>
                                     </div>
-                                    <p>حساب کاربری</p>
-                                </a>
-                            </div><!-- End .compare-dropdown -->
+                                    <div class="dropdown-menu dropdown-menu-right">
+
+                                    <a asp-controller="Profile"
+                                       asp-action="Index">
+
+                                        حساب کاربری
+
+                                    </a>
+
+                                    <form id="logoutForm"
+                                          asp-controller="Account"
+                                          asp-action="Logout"
+                                          method="post">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <button type="submit"
+                                                class="dropdown-item">
+
+                                            خروج
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                                }
+                                else
+                                {
+                                    <div class="account">
+                                    <a @* href="dashboard.html" *@ href="#signin-modal" data-toggle="modal" @* title="پروفایل من *@ title="ورود">
+                                        <div class="icon">
+                                            <i class="icon-user"></i>
+                                        </div>
+                                        @* <p>حساب کاربری</p> *@
+                                        <p>ثبت نام/ورود</p>
+                                    </a>
+                                    </div>
+                                }
+                                
+                            @* </div><!-- End .compare-dropdown --> *@
 
                             <div class="wishlist">
                                 <a href="wishlist.html" title="لیست علاقه مندی">
@@ -92,7 +140,7 @@
                                     </div>
                                     <p>موردعلاقه</p>
                                 </a>
-                            </div><!-- End .compare-dropdown -->
+                             </div><!-- End .compare-dropdown -->
 
                             <div class="dropdown cart-dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -457,7 +505,12 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="tab-content-5">
-                                <div class="tab-pane fade show active" id="signin" role="tabpanel"
+                                <partial name="_LoginModal"
+                                         model="new BookStore.Application.DTOs.Account.LoginDTO()" />
+
+                                <partial name="_RegisterModal"
+                                         model="new BookStore.Application.DTOs.Account.RegisterDTO()" />
+                                @* <div class="tab-pane fade show active" id="signin" role="tabpanel"
                                      aria-labelledby="signin-tab">
                                     <form action="#">
                                         <div class="form-group">
@@ -556,7 +609,7 @@
                                         </div><!-- End .row -->
                                     </div><!-- End .form-choice -->
                                 </div><!-- .End .tab-pane -->
-                            </div><!-- End .tab-content -->
+ *@                            </div><!-- End .tab-content -->
                         </div><!-- End .form-tab -->
                     </div><!-- End .form-box -->
                 </div><!-- End .modal-body -->
@@ -576,6 +629,7 @@
     <script src="/WebsiteTemplate/assets/js/jquery.elevateZoom.min.js"></script>
     <script src="/WebsiteTemplate/assets/js/bootstrap-input-spinner.js"></script>
     <script src="/WebsiteTemplate/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/WebsiteTemplate/assets/js/account.js"></script>
     <!-- Main JS File -->
     <script src="/WebsiteTemplate/assets/js/main.js"></script>
     <script src="/WebsiteTemplate/assets/js/demos/demo-20.js"></script>

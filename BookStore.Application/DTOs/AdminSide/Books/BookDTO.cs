@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Application.DTOs.AdminSide.Book
+namespace BookStore.Application.DTOs.AdminSide.Books
 {
     public class BookDTO
     {
@@ -20,7 +20,7 @@ namespace BookStore.Application.DTOs.AdminSide.Book
         public int BookInventory { get; set; }
         [Required]
         public int CategoryId { get; set; }
-        public IFormFile ImageFile { get; set; }
+        public List<IFormFile> Images { get; set; }
         public List<Category> Categories { get; set; } = new List<Category>();
     }
 }

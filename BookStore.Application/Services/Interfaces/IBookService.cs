@@ -1,4 +1,4 @@
-﻿using BookStore.Application.DTOs.AdminSide.Book;
+﻿using BookStore.Application.DTOs.AdminSide.Books;
 using BookStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,6 +19,6 @@ namespace BookStore.Application.Services.Interfaces
 
         Task EditABook(EditBookDTO book);
 
-        Task DeleteABook(Book book);
+        Task DeleteABook(int bookId);
     }
 }

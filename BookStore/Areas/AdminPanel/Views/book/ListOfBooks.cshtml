@@ -1,7 +1,4 @@
 ﻿@model List<BookStore.Domain.Entities.Book>
-
-
-<div class="content-wrapper" style="min-height: 265.6px;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -67,6 +64,12 @@
                                                    asp-area="AdminPanel"
                                                    asp-controller="Book"
                                                    asp-route-bookId="@book.Id">حذف</a>
+                                                   
+                                                   <a class="badge badge-warning" style="cursor:pointer;"
+                                                   asp-action="BookImages"
+                                                   asp-area="AdminPanel"
+                                                   asp-controller="Image"
+                                                   asp-route-bookId="@book.Id">ویرایش عکس ها</a>
                                             </td>
                                         </tr>
                                     }
@@ -80,4 +83,3 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-</div>

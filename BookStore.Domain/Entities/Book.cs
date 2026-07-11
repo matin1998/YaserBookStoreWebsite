@@ -7,7 +7,7 @@ public class Book
     public int BookPrice { get; set; }
     public string? BookDescription { get; set; }
     public int BookInventory {  get; set; }
-    public string? ImageName { get; set; }
     public int CategoryId { get; set; }
     public Category Category { get; set; }
+    public ICollection<Image> Images { get; set; } = new List<Image>();
 }

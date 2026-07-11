@@ -32,27 +32,32 @@
                                 <div class="row">
                                     <div class="col-md-6 col-lg-7">
                                         <div class="product-gallery">
+                                            @foreach(var image in Model.Images){
+                                                @if(image.IsMainImage==true){
                                             <figure class="product-main-image">
                                                 <span class="product-label label-sale">فروش ویژه</span>
-                                                <img id="product-zoom"
-                                                     src="/images/books/@Model.ImageName"
-                                                     data-zoom-image="/images/books/@Model.ImageName"
+                                                <img  id="product-zoom"
+                                                     src="/images/books/big/@image.ImageName"
+                                                     data-zoom-image="/images/books/big/@image.ImageName"
                                                      alt="تصویر محصول">
 
                                                 <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                     <i class="icon-arrows"></i>
                                                 </a>
                                             </figure><!-- End .product-main-image -->
-
+                                            }
+                                            }
+                                            
                                             <div id="product-zoom-gallery" class="product-image-gallery max-col-6">
+                                                @foreach(var image in Model.Images){
                                                 <a class="product-gallery-item" href="#"
-                                                   data-image="/images/books/@Model.ImageName"
-                                                   data-zoom-image="/images/books/@Model.ImageName">
-                                                    <img src="/images/books/@Model.ImageName"
+                                                   data-image="/images/books/medium/@image.ImageName"
+                                                   data-zoom-image="/images/books/big/@image.ImageName">
+                                                    <img src="/images/books/small/@image.ImageName"
                                                          alt="توضیحات تصویر">
                                                 </a>
-
-                                                <a class="product-gallery-item" href="#"
+                                                }
+                                                @* <a class="product-gallery-item" href="#"
                                                    data-image="/WebsiteTemplate/assets/images/products/single/fullwidth/2.jpg"
                                                    data-zoom-image="/WebsiteTemplate/assets/images/products/single/fullwidth/2-big.jpg">
                                                     <img src="/WebsiteTemplate/assets/images/products/single/fullwidth/2-small.jpg"
@@ -71,7 +76,7 @@
                                                    data-zoom-image="/WebsiteTemplate/assets/images/products/single/fullwidth/4-big.jpg">
                                                     <img src="/WebsiteTemplate/assets/images/products/single/fullwidth/4-small.jpg"
                                                          alt="product back">
-                                                </a>
+                                                </a> *@
 
                                             </div><!-- End .product-image-gallery -->
                                         </div><!-- End .product-gallery -->

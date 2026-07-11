@@ -7,10 +7,9 @@ public interface IBookRepository
     List<Book> GetListOfBooks();
 
     Task AddBookToDataBase(Book book);
-
-    Task<Book> GetABookByIdAsync(int bookId);
+    Task<Book?> GetABookByIdAsync(int bookId);
 
     Task EditABook(Book book);
 
-    Task DeleteABook(Book book);
+    Task DeleteABook(int bookId);
 }

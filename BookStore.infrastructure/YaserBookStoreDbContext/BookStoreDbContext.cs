@@ -1,4 +1,6 @@
 ﻿using BookStore.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.infrastructure.YaserBookStoreDbContext;
 
-public class BookStoreDbContext: DbContext
+public class BookStoreDbContext: IdentityDbContext<ApplicationUser, IdentityRole<long>, long>
 {
     #region Ctor
+    public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -26,6 +29,8 @@ public class BookStoreDbContext: DbContext
     public DbSet<Stationary> Stationaries { get; set; }
 
     public DbSet<Category> Categories { get; set; }
+
+    public DbSet<Image> Images { get; set; }
 
     #endregion
 }
