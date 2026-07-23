@@ -1,0 +1,80 @@
+﻿<aside class="col-md-4 col-lg-3">
+    <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+        <li class="nav-item">
+            <a asp-area="CustomerPanel"
+               asp-controller="Dashboard"
+               asp-action="Index"
+               class="nav-link">
+
+                داشبورد
+
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="CustomerPanel"
+               asp-controller="Orders"
+               asp-action="Index"
+               class="nav-link">
+
+                سفارشات
+
+            </a>
+        </li>
+    @*     <li class="nav-item">
+            <a class="nav-link" id="tab-downloads-link" data-toggle="tab"
+               href="#tab-downloads" role="tab" aria-controls="tab-downloads"
+               aria-selected="false">دانلود ها</a>
+        </li> *@
+        <li class="nav-item">
+            <a asp-area="CustomerPanel"
+               asp-controller="Address"
+               asp-action="Index"
+               class="nav-link">
+
+                آدرس‌ها
+
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="CustomerPanel"
+               asp-controller="Profile"
+               asp-action="Index"
+               class="nav-link">
+
+                اطلاعات حساب
+
+            </a>
+        </li>
+        <li class="nav-item">
+
+            <a asp-area="CustomerPanel"
+               asp-controller="ChangePassword"
+               asp-action="Index"
+               class="nav-link">
+
+                تغییر رمز عبور
+
+            </a>
+
+        </li>
+        <li class="nav-item">
+
+            <form id="logoutForm"
+                  asp-area=""
+                  asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <button type="submit" class="nav-link border-0 bg-transparent text-right w-100">
+
+                    خروج
+
+                </button>
+
+            </form>
+
+        </li>
+    </ul>
+</aside><!-- End .col-lg-3 -->

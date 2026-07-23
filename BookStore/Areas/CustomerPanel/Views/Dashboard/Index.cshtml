@@ -1,0 +1,73 @@
+﻿<main>
+    <partial name="_CustomerHeader" />
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+
+                <div class="row">
+
+                    <partial name="_CustomerSidebar" />
+
+                    <div class="col-md-8 col-lg-9">
+<div class="card card-dashboard">
+    <div class="card-body">
+
+        <h3 class="card-title">
+            داشبورد
+        </h3>
+
+        <p>
+            سلام
+            <span class="font-weight-normal text-dark">
+                @User.FindFirst("FullName")?.Value
+            </span>
+
+            <br />
+
+            شما در اینجا می‌توانید
+            <a asp-area="Customer"
+               asp-controller="Orders"
+               asp-action="Index"
+               class="link-underline">
+
+                سفارش‌های خود را مشاهده کنید
+
+            </a>
+            ، وضعیت ارسال سفارش‌های خود را بررسی کنید،
+            <a asp-area="Customer"
+               asp-controller="Address"
+               asp-action="Index">
+
+                آدرس‌های خود را مدیریت کنید
+
+            </a>
+            و همچنین
+            <a asp-area="Customer"
+               asp-controller="Profile"
+               asp-action="Index">
+
+                اطلاعات حساب کاربری خود را ویرایش کنید
+
+            </a>
+            یا از صفحه
+            <a asp-area="Customer"
+               asp-controller="ChangePassword"
+               asp-action="Index">
+
+                تغییر رمز عبور
+
+            </a>
+            رمز عبور خود را تغییر دهید.
+
+        </p>
+
+    </div>
+</div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

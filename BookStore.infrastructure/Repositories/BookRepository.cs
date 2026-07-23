@@ -8,50 +8,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.infrastructure.Repositories
+namespace BookStore.infrastructure.Repositories;
+
+public class BookRepository : BaseRepository<Book>,IBookRepository
 {
-    public class BookRepository : IBookRepository
+    #region Ctor
+    public BookRepository(BookStoreDbContext context)
+        : base(context)
     {
-        #region Ctor
-
-        private readonly BookStoreDbContext _context;
-
-        public BookRepository(BookStoreDbContext context)
-        {
-            _context = context;
-        }
-
-        #endregion
-        public async Task AddBookToDataBase(Book book)
-        {
-            await _context.Books.AddAsync(book);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteABook(int bookId)
-        {
-            var book = await GetABookByIdAsync(bookId);
-            if (book == null)
-                return;
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task EditABook(Book book)
-        {
-            _context.Books.Update(book);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<Book?> GetABookByIdAsync(int bookId)
-        {
-            return await _context.Books.Include(i => i.Images).FirstOrDefaultAsync(p=>p.Id==bookId);
-        }
-
-        public List<Book> GetListOfBooks()
-        {
-            return _context.Books.Include(b => b.Category).Include(i => i.Images).AsSplitQuery().ToList();
-        }
 
     }
+    #endregion
+    public async Task AddBookToDataBase(Book book)
+    {
+        await AddAsync(book);
+    }
+
+    public async Task DeleteABook(long bookId)
+    {
+        var book = await GetABookByIdAsync(bookId);
+        if (book == null)
+            return;
+        await DeleteAsync(book);
+    }
+
+    public async Task EditABook(Book book)
+    {
+        await UpdateAsync(book);
+    }
+
+    public async Task<Book?> GetABookByIdAsync(long bookId)
+    {
+        return await _context.Books.Include(i => i.Images).FirstOrDefaultAsync(p=>p.Id==bookId);
+    }
+
+    public List<Book> GetListOfBooks()
+    {
+        return _context.Books.Include(b => b.Category).Include(i => i.Images).AsSplitQuery().ToList();
+    }
+
 }

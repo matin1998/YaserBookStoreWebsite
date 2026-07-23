@@ -44,7 +44,7 @@
                         </button>
 
                         <a href="index-1.html" class="logo">
-                            <img src="WebsiteTemplate/assets/images/demos/demo-20/logo.png" alt="Molla Logo" width="105" height="25">
+                            <img src="/WebsiteTemplate/assets/images/demos/demo-20/logo.png" alt="Molla Logo" width="105" height="25">
                         </a>
                     </div><!-- End .header-left -->
 
@@ -91,7 +91,8 @@
                                     </div>
                                     <div class="dropdown-menu dropdown-menu-right">
 
-                                    <a asp-controller="Profile"
+                                    <a asp-area="CustomerPanel"
+                                       asp-controller="Profile"
                                        asp-action="Index">
 
                                         حساب کاربری
@@ -99,6 +100,7 @@
                                     </a>
 
                                     <form id="logoutForm"
+                                          asp-area=""
                                           asp-controller="Account"
                                           asp-action="Logout"
                                           method="post">
@@ -167,7 +169,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/cart/product-1.jpg" alt="محصول">
+                                                    <img src="/WebsiteTemplate/assets/images/products/cart/product-1.jpg" alt="محصول">
                                                 </a>
                                             </figure>
                                             <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
@@ -187,7 +189,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/cart/product-2.jpg" alt="محصول">
+                                                    <img src="/WebsiteTemplate/assets/images/products/cart/product-2.jpg" alt="محصول">
                                                 </a>
                                             </figure>
                                             <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
@@ -254,6 +256,7 @@
                 </div><!-- End .container -->
             </div><!-- End .header-bottom -->
         </header><!-- End .header -->
+        <partial name="_Alerts" />
         @RenderBody()
 
         <footer class="footer footer-2">
@@ -633,6 +636,7 @@
     <!-- Main JS File -->
     <script src="/WebsiteTemplate/assets/js/main.js"></script>
     <script src="/WebsiteTemplate/assets/js/demos/demo-20.js"></script>
+    @RenderSection("Scripts", required: false)
     </body>
 
 

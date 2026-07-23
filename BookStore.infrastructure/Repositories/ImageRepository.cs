@@ -10,44 +10,40 @@ using System.Threading.Tasks;
 
 namespace BookStore.infrastructure.Repositories;
 
-public class ImageRepository : IImageRepository
+public class ImageRepository : BaseRepository<Image>,IImageRepository
 {
-    private readonly BookStoreDbContext _context;
     #region Ctor
     public ImageRepository(BookStoreDbContext context)
+        :base(context)
     {
-        _context = context;
     }
 
     #endregion
     public async Task AddImageToDataBase(Image image)
     {
-        await _context.Images.AddAsync(image);
-        await _context.SaveChangesAsync();
+        await AddAsync(image);
     }
 
     public async Task DeleteAnImage(Image image)
     {
-        _context.Images.Remove(image);
-        await _context.SaveChangesAsync();
+         await DeleteAsync(image);
     }
 
     public async Task EditAnImage(Image image)
     {
-        _context.Images.Update(image);
-        await _context.SaveChangesAsync();
+        await UpdateAsync(image);
     }
 
-    public Task<Image> GetAnImageByIdAsync(int imageId)
+    public async Task<Image> GetAnImageByIdAsync(int imageId)
     {
-        return _context.Images.FirstOrDefaultAsync(p => p.Id == imageId);
+        return await _context.Images.FirstOrDefaultAsync(p => p.Id == imageId);
     }
 
-    public List<Image> GetListOfImages()
+    public async Task<List<Image>> GetListOfImages()
     {
-        return _context.Images.ToList();
+        return await GetAllAsync();
     }
-    public async Task<List<Image>> GetImagesByBookIdAsync(int bookId)
+    public async Task<List<Image>> GetImagesByBookIdAsync(long bookId)
     {
         return await _context.Images
             .Where(x => x.BookId == bookId)

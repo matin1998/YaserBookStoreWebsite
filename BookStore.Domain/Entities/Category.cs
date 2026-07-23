@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Entities;
 
-public class Category
+public class Category:BaseEntity
 {
-    public int Id { get; set; }
     public string CategoryTitle { get; set; }
     public ICollection<Book> books { get; set; } = new List<Book>();
 }

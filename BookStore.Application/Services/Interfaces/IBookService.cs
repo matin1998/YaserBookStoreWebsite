@@ -15,10 +15,10 @@ namespace BookStore.Application.Services.Interfaces
 
         List<Book> GetListOfBooksByCategoryId(int categoryId);
 
-        Task<Book> GetABookByIdAsync(int bookId);
+        Task<Book> GetABookByIdAsync(long bookId);
 
         Task EditABook(EditBookDTO book);
 
-        Task DeleteABook(int bookId);
+        Task DeleteABook(long bookId);
     }
 }

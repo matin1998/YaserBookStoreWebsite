@@ -10,19 +10,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting; // Ensure this is already present
 using Microsoft.Extensions.Hosting;
+using BookStore.Domain.UnitOfWork;
 namespace BookStore.Application.Services.Implementations;
 
 public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepository;
     private readonly IImageService _imageService;
+    private readonly IUnitOfWork _unitOfWork;
 
     public BookService(
         IBookRepository bookRepository,
-        IImageService imageService)
+        IImageService imageService,
+        IUnitOfWork unitOfWork)
     {
         _bookRepository = bookRepository;
         _imageService = imageService;
+        _unitOfWork = unitOfWork;
     }
     public async Task AddBookToDataBase(BookDTO model)
     {
@@ -41,21 +45,26 @@ public class BookService : IBookService
         {
             existingBook.BookInventory++;
             await _bookRepository.EditABook(existingBook);
+            await _unitOfWork.SaveChangesAsync();
         }
         else {
             await _bookRepository.AddBookToDataBase(book);
+            await _unitOfWork.SaveChangesAsync();
         }
         foreach (var image in model.Images)
         {
             await _imageService
                 .AddImageAsync(image, book.Id);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 
-    public async Task DeleteABook(int bookId)
+    public async Task DeleteABook(long bookId)
     {
         await _imageService.DeleteImagesByBookIdAsync(bookId);
         await _bookRepository.DeleteABook(bookId);
+        await _unitOfWork.SaveChangesAsync();
+
     }
 
     public async Task EditABook(EditBookDTO model)
@@ -74,6 +83,7 @@ public class BookService : IBookService
         book.CategoryId = model.CategoryId;
 
         await _bookRepository.EditABook(book);
+        
 
         if (model.NewImages != null &&
             model.NewImages.Any())
@@ -84,9 +94,10 @@ public class BookService : IBookService
                     .AddImageAsync(image, book.Id);
             }
         }
+        await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<Book> GetABookByIdAsync(int bookId)
+    public async Task<Book> GetABookByIdAsync(long bookId)
     {
         Book book=await _bookRepository.GetABookByIdAsync(bookId);
         return book;

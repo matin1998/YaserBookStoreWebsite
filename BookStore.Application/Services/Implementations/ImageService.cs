@@ -1,6 +1,7 @@
 ﻿using BookStore.Application.Services.Interfaces;
 using BookStore.Domain.Entities;
 using BookStore.Domain.RepositoryInterfaces;
+using BookStore.Domain.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,21 @@ public class ImageService : IImageService
 {
     private readonly IImageRepository _imageRepository;
     private readonly IFileService _fileService;
+    private readonly IUnitOfWork _unitOfWork;
 
     public ImageService(
         IImageRepository imageRepository,
-        IFileService fileService)
+        IFileService fileService,
+        IUnitOfWork unitOfWork)
     {
         _imageRepository = imageRepository;
         _fileService = fileService;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task AddImageAsync(
         IFormFile imageFile,
-        int bookId)
+        long bookId)
     {
         string imageName =
             await _fileService.SaveImageAsync(imageFile);
@@ -38,6 +42,7 @@ public class ImageService : IImageService
         };
 
         await _imageRepository.AddImageToDataBase(image);
+        await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task DeleteImageAsync(int imageId)
@@ -51,6 +56,7 @@ public class ImageService : IImageService
         _fileService.DeleteImage(image.ImageName);
 
         await _imageRepository.DeleteAnImage(image);
+        await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task EditImageAsync(
@@ -71,6 +77,7 @@ public class ImageService : IImageService
         image.ImageName = newImageName;
 
         await _imageRepository.EditAnImage(image);
+        await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task<Image> GetImageByIdAsync(int imageId)
@@ -79,12 +86,12 @@ public class ImageService : IImageService
             .GetAnImageByIdAsync(imageId);
     }
 
-    public List<Image> GetAllImages()
+    public async Task<List<Image>> GetAllImages()
     {
-        return _imageRepository.GetListOfImages();
+        return await _imageRepository.GetListOfImages();
     }
 
-    public async Task DeleteImagesByBookIdAsync(int bookId)
+    public async Task DeleteImagesByBookIdAsync(long bookId)
     {
         var images = await _imageRepository.GetImagesByBookIdAsync(bookId);
 
@@ -94,9 +101,10 @@ public class ImageService : IImageService
 
             await _imageRepository.DeleteAnImage(image);
         }
+        await _unitOfWork.SaveChangesAsync();
     }
     
-    public async Task<List<Image>> GetImagesByBookIdAsync(int bookId)
+    public async Task<List<Image>> GetImagesByBookIdAsync(long bookId)
     {
         var images = await _imageRepository.GetImagesByBookIdAsync(bookId);
         return images;
@@ -111,8 +119,7 @@ public class ImageService : IImageService
             return;
 
         var images =
-            _imageRepository
-            .GetListOfImages()
+            (await _imageRepository.GetListOfImages())
             .Where(x => x.BookId == image.BookId)
             .ToList();
 
@@ -126,5 +133,6 @@ public class ImageService : IImageService
         image.IsMainImage = true;
 
         await _imageRepository.EditAnImage(image);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

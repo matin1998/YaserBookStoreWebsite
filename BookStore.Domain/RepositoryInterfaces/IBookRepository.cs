@@ -2,14 +2,14 @@
 
 namespace BookStore.Domain.RepositoryInterfaces;
 
-public interface IBookRepository
+public interface IBookRepository : IBaseRepository<Book>
 {
     List<Book> GetListOfBooks();
 
     Task AddBookToDataBase(Book book);
-    Task<Book?> GetABookByIdAsync(int bookId);
+    Task<Book?> GetABookByIdAsync(long bookId);
 
     Task EditABook(Book book);
 
-    Task DeleteABook(int bookId);
+    Task DeleteABook(long bookId);
 }

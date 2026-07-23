@@ -1,13 +1,12 @@
 ﻿namespace BookStore.Domain.Entities;
 
-public class Book
+public class Book:BaseEntity
 {
-    public int Id { get; set; }
     public string BookTitle { get; set; }
     public int BookPrice { get; set; }
     public string? BookDescription { get; set; }
     public int BookInventory {  get; set; }
-    public int CategoryId { get; set; }
+    public long CategoryId { get; set; }
     public Category Category { get; set; }
     public ICollection<Image> Images { get; set; } = new List<Image>();
 }

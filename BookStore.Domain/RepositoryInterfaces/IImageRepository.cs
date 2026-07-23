@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.RepositoryInterfaces
 {
-    public interface IImageRepository
+    public interface IImageRepository:IBaseRepository<Image>
     {
-        List<Image> GetListOfImages();
+        Task<List<Image>> GetListOfImages();
 
         Task AddImageToDataBase(Image image);
 
@@ -18,6 +18,6 @@ namespace BookStore.Domain.RepositoryInterfaces
         Task EditAnImage(Image image);
 
         Task DeleteAnImage(Image image);
-        Task<List<Image>> GetImagesByBookIdAsync(int bookId);
+        Task<List<Image>> GetImagesByBookIdAsync(long bookId);
     }
 }

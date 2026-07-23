@@ -1,0 +1,65 @@
+﻿@using BookStore.Presentation.Common
+
+@if (TempData[TempDataKeys.Success] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData[TempDataKeys.Success]
+
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+
+            <span aria-hidden="true">&times;</span>
+
+        </button>
+    </div>
+}
+
+@if (TempData[TempDataKeys.Error] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData[TempDataKeys.Error]
+
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+
+            <span aria-hidden="true">&times;</span>
+
+        </button>
+    </div>
+}
+
+@if (TempData[TempDataKeys.Warning] != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @TempData[TempDataKeys.Warning]
+
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+
+            <span aria-hidden="true">&times;</span>
+
+        </button>
+    </div>
+}
+
+@if (TempData[TempDataKeys.Info] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData[TempDataKeys.Info]
+
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+
+            <span aria-hidden="true">&times;</span>
+
+        </button>
+    </div>
+}

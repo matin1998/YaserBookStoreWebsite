@@ -12,5 +12,7 @@ public class ApplicationUser : IdentityUser<long>
     public string FullName { get; set; }
     public DateTime RegisterDate { get; set; } = DateTime.UtcNow;
     public bool IsActive { get; set; } = true;
+    public ICollection<Address> Addresses { get; set; }
+    = new List<Address>();
 }
 

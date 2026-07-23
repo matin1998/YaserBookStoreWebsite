@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Entities;
 
-public class Stationary
+public class Stationary:BaseEntity
 {
-    public int Id { get; set; }
     public string StationaryTitle { get; set; }
     public int StationaryPrice { get; set; }
     public string? StationaryDescription { get; set; }

@@ -83,5 +83,58 @@ namespace BookStore.infrastructure.Services
         {
             return await _userManager.RemoveFromRoleAsync(user, role);
         }
+
+        public async Task<EditProfileDTO> GetProfileAsync(long userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+                return null;
+
+            return new EditProfileDTO
+            {
+                FullName = user.FullName,
+                Email = user.Email!,
+                PhoneNumber = user.PhoneNumber
+            };
+        }
+
+        public async Task<IdentityResult> UpdateProfileAsync(long userId,EditProfileDTO model)
+        {
+            var duplicateUser = await _userManager.FindByEmailAsync(model.Email);
+
+            if (duplicateUser != null && duplicateUser.Id != userId)
+            {
+                return IdentityResult.Failed(
+                    new IdentityError
+                    {
+                        Description = "این ایمیل قبلاً ثبت شده است."
+                    });
+            }
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+                return IdentityResult.Failed();
+
+            user.FullName = model.FullName;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+
+            return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(long userId, ChangePasswordDTO model)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+                return IdentityResult.Failed();
+
+            return await _userManager.ChangePasswordAsync(
+                user,
+                model.CurrentPassword,
+                model.NewPassword);
+        }
     }
 }

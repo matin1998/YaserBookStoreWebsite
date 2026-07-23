@@ -117,10 +117,7 @@ namespace BookStore.Presentation.Controllers
         {
             await _accountService.LogoutAsync();
 
-            return Json(new
-            {
-                success = true
-            });
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion

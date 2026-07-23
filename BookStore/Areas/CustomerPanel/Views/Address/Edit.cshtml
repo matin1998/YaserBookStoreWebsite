@@ -1,0 +1,142 @@
+﻿@model BookStore.Application.DTOs.AddressDTO
+
+<main>
+
+    <partial name="_CustomerHeader" />
+
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+
+                <div class="row">
+
+                    <partial name="_CustomerSidebar" />
+
+                    <div class="col-md-8 col-lg-9">
+
+                        <div class="card card-dashboard">
+
+                            <div class="card-body">
+
+                                <h3 class="card-title mb-4">
+                                    افزودن آدرس جدید
+                                </h3>
+
+                                <form asp-action="Edit" method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <div asp-validation-summary="ModelOnly"
+                                         class="text-danger mb-3"></div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" class="form-control"  />
+                                            <span asp-validation-for="Title" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="FullName"></label>
+                                            <input asp-for="FullName" class="form-control" />
+                                            <span asp-validation-for="FullName" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Mobile"></label>
+                                            <input asp-for="Mobile" class="form-control" />
+                                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="PostalCode"></label>
+                                            <input asp-for="PostalCode" class="form-control" />
+                                            <span asp-validation-for="PostalCode" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-3">
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Province"></label>
+                                            <input asp-for="Province" class="form-control" />
+                                            <span asp-validation-for="Province" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="City"></label>
+                                            <input asp-for="City" class="form-control" />
+                                            <span asp-validation-for="City" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-3">
+
+                                        <label asp-for="AddressText"></label>
+
+                                        <textarea asp-for="AddressText"
+                                                  rows="4"
+                                                  class="form-control"></textarea>
+
+                                        <span asp-validation-for="AddressText"
+                                              class="text-danger"></span>
+
+                                    </div>
+                                   
+                                    <div class="mt-4">
+
+                                        <div class="form-check text-right">
+                                            <label class="mb-0">
+
+                                                <input asp-for="IsDefault"
+                                                       style="margin-left:8px;" />
+
+                                                این آدرس پیش‌فرض باشد
+
+                                            </label>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+
+                                        <div class="mt-3">
+
+                                            <button type="submit" class="btn btn-primary">
+                                                ویرایش آدرس
+                                            </button>
+
+                                            <a asp-action="Index"
+                                               class="btn btn-outline-secondary mr-2">
+                                                انصراف
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

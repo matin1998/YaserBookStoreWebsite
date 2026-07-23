@@ -10,7 +10,7 @@ namespace BookStore.Application.DTOs.AdminSide.Books;
 
 public class BookImagesDTO
 {
-    public int BookId { get; set; }
+    public long BookId { get; set; }
 
     public string BookTitle { get; set; }
 

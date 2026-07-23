@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Presentation.Areas.AdminPanel.Controllers
 {
-    [ApiController]
-    [Route("api/v1/[controller]/[action]")]
+
     public class CategoryController:ControllerBase
     {
         private readonly ICategoryService _categoryService;

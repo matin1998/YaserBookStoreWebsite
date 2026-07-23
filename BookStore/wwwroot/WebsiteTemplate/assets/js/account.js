@@ -141,30 +141,6 @@
             }
         });
     });
-    $("#logoutForm").submit(function (e) {
-
-        e.preventDefault();
-
-        $.ajax({
-
-            url: $(this).attr("action"),
-
-            type: "POST",
-
-            data: $(this).serialize(),
-
-            success: function (response) {
-
-                if (response.success) {
-
-                    location.reload();
-
-                }
-
-            }
-
-        });
-
-    });
+    
 
 });

@@ -1,0 +1,132 @@
+﻿@model List<BookStore.Application.DTOs.AddressDTO>
+<main>
+    <partial name="_CustomerHeader" />
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+
+                <div class="row">
+
+                    <partial name="_CustomerSidebar" />
+
+                    <div class="col-md-8 col-lg-9">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="mb-0">آدرس‌های من</h3>
+
+                <a asp-action="Create"
+                   class="btn btn-outline-primary">
+                    <i class="icon-plus"></i>
+                    افزودن آدرس جدید
+                </a>
+            </div>
+
+            <p class="mb-4">
+                آدرس پیش‌فرض هنگام ثبت سفارش به صورت خودکار انتخاب خواهد شد.
+            </p>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    هنوز آدرسی ثبت نشده است.
+                </div>
+            }
+            else
+            {
+                <div class="row">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-6 mb-3">
+
+                            <div class="card card-dashboard h-100">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <h4 class="card-title mb-3">
+                                            @item.Title
+
+                                            @if (item.IsDefault)
+                                            {
+                                                <span class="badge badge-success">
+                                                    پیش فرض
+                                                </span>
+                                            }
+                                        </h4>
+
+                                    </div>
+
+                                    <p>
+
+                                        <strong>@item.FullName</strong>
+
+                                        <br />
+
+                                        @item.Mobile
+
+                                        <br />
+
+                                        @item.Province - @item.City
+
+                                        <br />
+
+                                        @item.AddressText
+
+                                        <br />
+
+                                        کدپستی :
+                                        @item.PostalCode
+
+                                    </p>
+
+                                    <hr />
+
+                                    <div class="d-flex">
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-primary mr-2">
+
+                                            <i class="icon-edit"></i>
+
+                                            ویرایش
+
+                                        </a>
+
+                                        <form asp-action="Delete"
+                                              asp-route-id="@item.Id"
+                                              method="post"
+                                              onsubmit="return confirm('آیا از حذف این آدرس مطمئن هستید؟')">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <button class="btn btn-sm btn-outline-danger">
+
+                                                <i class="icon-trash"></i>
+
+                                                حذف
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</main>

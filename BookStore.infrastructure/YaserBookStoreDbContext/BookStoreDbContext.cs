@@ -32,5 +32,7 @@ public class BookStoreDbContext: IdentityDbContext<ApplicationUser, IdentityRole
 
     public DbSet<Image> Images { get; set; }
 
+    public DbSet<Address> Addresses { get; set; }
+
     #endregion
 }

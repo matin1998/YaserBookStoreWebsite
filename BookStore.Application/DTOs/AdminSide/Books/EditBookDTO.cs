@@ -11,7 +11,7 @@ namespace BookStore.Application.DTOs.AdminSide.Books
 {
     public class EditBookDTO
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         [Required]
         public string BookTitle { get; set; }
         [Required]
@@ -20,7 +20,7 @@ namespace BookStore.Application.DTOs.AdminSide.Books
         [Required]
         public int BookInventory { get; set; }
         [Required]
-        public int CategoryId { get; set; }
+        public long CategoryId { get; set; }
         public List<IFormFile> NewImages { get; set; }
         = new();
         public List<Category> Categories { get; set; } = new List<Category>();

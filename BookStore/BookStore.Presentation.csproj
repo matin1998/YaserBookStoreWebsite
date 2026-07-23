@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\CustomerPanel\Views\" />
     <Folder Include="wwwroot\images\books\big\" />
     <Folder Include="wwwroot\images\books\medium\" />
     <Folder Include="wwwroot\images\books\thumb\" />

@@ -23,4 +23,12 @@ public interface IAccountService
     Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role);
 
     Task<IdentityResult> RemoveFromRoleAsync(ApplicationUser user, string role);
+
+    Task<EditProfileDTO> GetProfileAsync(long userId);
+
+    Task<IdentityResult> UpdateProfileAsync(long userId,EditProfileDTO model);
+
+    Task<IdentityResult> ChangePasswordAsync(
+    long userId,
+    ChangePasswordDTO model);
 }

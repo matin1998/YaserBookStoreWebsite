@@ -63,7 +63,7 @@ public class BookController : AdminBaseController
     #region Edit A Book
 
     [HttpGet]
-    public async Task<IActionResult> EditABook(int bookId)
+    public async Task<IActionResult> EditABook(long bookId)
     {
         #region Get A book By Id
 

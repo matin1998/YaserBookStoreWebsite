@@ -19,7 +19,7 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             _imageService = imageService;
         }
         [HttpGet]
-        public async Task<IActionResult> BookImages(int bookId)
+        public async Task<IActionResult> BookImages(long bookId)
         {
             var book =await _bookService.GetABookByIdAsync(bookId);
             var images = await _imageService.GetImagesByBookIdAsync(bookId);
@@ -56,7 +56,7 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             if (image == null)
                 return NotFound();
 
-            int bookId = image.BookId;
+            long bookId = image.BookId;
 
             await _imageService.DeleteImageAsync(imageId);
 
@@ -72,7 +72,7 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             if (image == null)
                 return NotFound();
 
-            int bookId = image.BookId;
+            long bookId = image.BookId;
             await _imageService.SetMainImageAsync(imageId);
             return RedirectToAction(nameof(BookImages),
                 new { bookId });

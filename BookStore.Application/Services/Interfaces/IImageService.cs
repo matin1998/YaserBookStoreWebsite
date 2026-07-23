@@ -10,19 +10,19 @@ namespace BookStore.Application.Services.Interfaces;
 
 public interface IImageService
 {
-    Task AddImageAsync(IFormFile imageFile, int bookId);
+    Task AddImageAsync(IFormFile imageFile, long bookId);
 
     Task DeleteImageAsync(int imageId);
 
     Task EditImageAsync(int imageId, IFormFile newImage);
 
-    Task DeleteImagesByBookIdAsync(int bookId);
+    Task DeleteImagesByBookIdAsync(long bookId);
 
     Task<Image> GetImageByIdAsync(int imageId);
 
-    Task<List<Image>> GetImagesByBookIdAsync(int bookId);
+    Task<List<Image>> GetImagesByBookIdAsync(long bookId);
 
-    List<Image> GetAllImages();
+    Task<List<Image>> GetAllImages();
 
     Task SetMainImageAsync(int imageId);
 }

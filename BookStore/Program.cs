@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using BookStore.Domain.Entities;
 using BookStore.infrastructure.Identity;
 using BookStore.Infrastructure.Identity;
+using BookStore.Domain.UnitOfWork;
+using BookStore.infrastructure.UnitOfWork;
 namespace BookStore.Presentation;
 
 public class Program
@@ -59,6 +61,9 @@ public class Program
         builder.Services.AddScoped<IFileService, FileService>();
         builder.Services.AddScoped<IImageService, ImageService>();
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+        builder.Services.AddScoped<IAddressService, AddressService>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddDbContext<BookStoreDbContext>();
         builder.Services.AddControllers();
         builder.Services.AddAuthorization();
