@@ -25,7 +25,7 @@ where TEntity : BaseEntity
     public virtual async Task<List<TEntity>> GetAllAsync()
     {
         return await _dbSet
-            .AsNoTracking()
+            /*.AsNoTracking()*/
             .ToListAsync();
     }
 

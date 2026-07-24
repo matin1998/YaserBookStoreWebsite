@@ -127,7 +127,7 @@ public class ImageService : IImageService
         {
             item.IsMainImage = false;
 
-            await _imageRepository.EditAnImage(item);
+            /*await _imageRepository.EditAnImage(item);*/
         }
 
         image.IsMainImage = true;

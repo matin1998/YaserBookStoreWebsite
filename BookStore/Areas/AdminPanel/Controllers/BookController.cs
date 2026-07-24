@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Presentation.Areas.AdminPanel.Controllers;
 
-[Area("AdminPanel")]
+
 public class BookController : AdminBaseController
 {
     #region Ctor
@@ -38,6 +38,7 @@ public class BookController : AdminBaseController
     [HttpGet]
     public IActionResult CreateABook()
     {
+        
         var model = new BookDTO
         {
             Categories = _categoryService.GetListOFCategories().ToList()
@@ -54,8 +55,8 @@ public class BookController : AdminBaseController
 
             return RedirectToAction(nameof(ListOfBooks));
         }
-
-        return View();
+        model.Categories = _categoryService.GetListOFCategories().ToList();
+        return View(model);
     }
 
     #endregion
@@ -113,11 +114,11 @@ public class BookController : AdminBaseController
     }
 
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteABook(int bookId)
+    public async Task<IActionResult> DeleteABook(Book book)
     {
         #region Update A book
 
-        await _bookService.DeleteABook(bookId);
+        await _bookService.DeleteABook(book.Id);
 
         return RedirectToAction(nameof(ListOfBooks));
 

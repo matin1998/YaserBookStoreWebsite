@@ -6,7 +6,7 @@ namespace Resume.Presenation.Areas.AdminPanel.Controllers;
 
 #endregion
 
-[Area("AdminPanel")]
+
 public class HomeController : AdminBaseController
 {
     public IActionResult Index()

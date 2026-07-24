@@ -100,6 +100,9 @@ public class BookService : IBookService
     public async Task<Book> GetABookByIdAsync(long bookId)
     {
         Book book=await _bookRepository.GetABookByIdAsync(bookId);
+        if (book == null)
+            throw new Exception("Book not found");
+
         return book;
         //Console.WriteLine(book.BookTitle+" "+book.BookPrice+" "+book.BookInventory+" "+book.BookDescription);
     }

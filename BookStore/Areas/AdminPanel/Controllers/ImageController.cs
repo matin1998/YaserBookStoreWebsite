@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace BookStore.Presentation.Areas.AdminPanel.Controllers
 {
-    [Area("AdminPanel")]
     public class ImageController : AdminBaseController
     {
         private readonly IBookService _bookService;

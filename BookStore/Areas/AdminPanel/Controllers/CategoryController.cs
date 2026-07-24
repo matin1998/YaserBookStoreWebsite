@@ -1,11 +1,13 @@
-﻿using BookStore.Application.Services.Interfaces;
+﻿using BookStore.Application.DTOs.AdminSide.Books;
+using BookStore.Application.Services.Implementations;
+using BookStore.Application.Services.Interfaces;
 using BookStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Presentation.Areas.AdminPanel.Controllers
 {
 
-    public class CategoryController:ControllerBase
+    public class CategoryController:AdminBaseController
     {
         private readonly ICategoryService _categoryService;
 
@@ -14,26 +16,68 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             _categoryService = categoryService;
         }
 
+        [HttpGet]
+        public IActionResult ListOfCategories()
+        {
+            var model = _categoryService.GetListOFCategories();
 
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult AddCategory()
+        {
+            var model = new Category();
+            
+            return View(model);
+        }
         [HttpPost]
-        public async Task<IActionResult> AddCategoryToDataBase(Category category)
+        public async Task<IActionResult> AddCategory(Category category)
         {
             await _categoryService.AddCategoryToDataBase(category);
-            return RedirectToAction(nameof(GetListOFCategories));
+            return RedirectToAction(nameof(ListOfCategories));
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteACategory(Category category)
+        [HttpGet]
+        public async Task<IActionResult> DeleteAcategory(int categoryId)
         {
+            #region Get A Category By Id
+
+            var category = await _categoryService.GetACategoryByIdAsync(categoryId);
+
+            #endregion
+
+            return View(category);
+        }
+
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteACategory(int categoryId)
+        {
+            
+            var category = await _categoryService.GetACategoryByIdAsync(categoryId);
             await _categoryService.DeleteACategory(category);
-            return RedirectToAction(nameof(GetListOFCategories));
+
+            return RedirectToAction(nameof(ListOfCategories));
         }
-        [HttpPut]
-        public async Task<IActionResult> EditACategory(Category category)
+        [HttpGet]
+        public async Task<IActionResult> EditAcategory(int categoryId)
         {
-            await _categoryService.EditACategory(category);
-            return RedirectToAction(nameof(GetListOFCategories));
+            #region Get A book By Id
+
+            var category = await _categoryService.GetACategoryByIdAsync(categoryId);
+
+            #endregion
+
+            return View(category);
         }
-        [HttpGet("id")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditACategory(int categoryId)
+        {
+            var category = await _categoryService.GetACategoryByIdAsync(categoryId);
+            await _categoryService.EditACategory(category);
+            return RedirectToAction(nameof(ListOfCategories));
+        }
+        /*[HttpGet("id")]
         public async Task<ActionResult<Category>> GetACategoryByIdAsync(int id)
         {
             if (id < 0)
@@ -47,12 +91,7 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             }
 
             return category;
-        }
-        [HttpGet]
-        public ActionResult<List<Category>> GetListOFCategories()
-        {
-            return _categoryService.GetListOFCategories();
-        }
+        }*/
 
     }
 }

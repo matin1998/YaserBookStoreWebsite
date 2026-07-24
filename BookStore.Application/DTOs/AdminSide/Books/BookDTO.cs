@@ -20,7 +20,7 @@ namespace BookStore.Application.DTOs.AdminSide.Books
         public int BookInventory { get; set; }
         [Required]
         public int CategoryId { get; set; }
-        public List<IFormFile> Images { get; set; }
+        public List<IFormFile> Images { get; set; } = new();
         public List<Category> Categories { get; set; } = new List<Category>();
     }
 }

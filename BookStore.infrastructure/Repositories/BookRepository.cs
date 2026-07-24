@@ -39,12 +39,12 @@ public class BookRepository : BaseRepository<Book>,IBookRepository
 
     public async Task<Book?> GetABookByIdAsync(long bookId)
     {
-        return await _context.Books.Include(i => i.Images).FirstOrDefaultAsync(p=>p.Id==bookId);
+        return await _dbSet.Include(i => i.Images).FirstOrDefaultAsync(p=>p.Id==bookId);
     }
 
     public List<Book> GetListOfBooks()
     {
-        return _context.Books.Include(b => b.Category).Include(i => i.Images).AsSplitQuery().ToList();
+        return _dbSet.Include(b => b.Category).Include(i => i.Images).AsSplitQuery().ToList();
     }
 
 }
