@@ -43,10 +43,10 @@ public class ImageRepository : BaseRepository<Image>,IImageRepository
     {
         return await GetAllAsync();
     }
-    public async Task<List<Image>> GetImagesByBookIdAsync(long bookId)
+    public async Task<List<Image>> GetImagesByProductIdAsync(long productId)
     {
         return await _context.Images
-            .Where(x => x.BookId == bookId)
+            .Where(x => x.ProductId == productId)
             .ToListAsync();
     }
 }

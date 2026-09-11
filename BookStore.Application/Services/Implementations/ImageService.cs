@@ -29,7 +29,7 @@ public class ImageService : IImageService
 
     public async Task AddImageAsync(
         IFormFile imageFile,
-        long bookId)
+        long productId)
     {
         string imageName =
             await _fileService.SaveImageAsync(imageFile);
@@ -37,7 +37,7 @@ public class ImageService : IImageService
         Image image = new Image
         {
             ImageName = imageName,
-            BookId = bookId,
+            ProductId = productId,
             IsMainImage = false
         };
 
@@ -91,9 +91,9 @@ public class ImageService : IImageService
         return await _imageRepository.GetListOfImages();
     }
 
-    public async Task DeleteImagesByBookIdAsync(long bookId)
+    public async Task DeleteImagesByProductIdAsync(long productId)
     {
-        var images = await _imageRepository.GetImagesByBookIdAsync(bookId);
+        var images = await _imageRepository.GetImagesByProductIdAsync(productId);
 
         foreach (var image in images)
         {
@@ -104,9 +104,9 @@ public class ImageService : IImageService
         await _unitOfWork.SaveChangesAsync();
     }
     
-    public async Task<List<Image>> GetImagesByBookIdAsync(long bookId)
+    public async Task<List<Image>> GetImagesByProductIdAsync(long productId)
     {
-        var images = await _imageRepository.GetImagesByBookIdAsync(bookId);
+        var images = await _imageRepository.GetImagesByProductIdAsync(productId);
         return images;
     }
 
@@ -120,7 +120,7 @@ public class ImageService : IImageService
 
         var images =
             (await _imageRepository.GetListOfImages())
-            .Where(x => x.BookId == image.BookId)
+            .Where(x => x.ProductId == image.ProductId)
             .ToList();
 
         foreach (var item in images)

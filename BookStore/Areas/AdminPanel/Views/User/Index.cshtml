@@ -1,0 +1,86 @@
+﻿@model List<BookStore.Application.DTOs.AdminSide.Users.UserListDTO>
+
+@{
+    ViewData["Title"] = "مدیریت کاربران";
+}
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 class="card-title">
+            لیست کاربران
+        </h3>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        <table class="table table-bordered table-hover">
+
+            <thead>
+
+                <tr>
+                    <th>نام</th>
+                    <th>ایمیل</th>
+                    <th>موبایل</th>
+                    <th>نقش</th>
+                    <th>عملیات</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.FullName</td>
+
+                        <td>@item.Email</td>
+
+                        <td>@item.PhoneNumber</td>
+
+                        <td>
+
+                            @if (item.RoleName == "Admin")
+                            {
+                                <span class="badge badge-success">
+                                    مدیر
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">
+                                    کاربر
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <a asp-action="EditRole"
+                               asp-route-userId="@item.Id"
+                               class="btn btn-warning btn-sm">
+
+                                تغییر نقش
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

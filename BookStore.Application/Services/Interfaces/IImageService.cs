@@ -16,11 +16,11 @@ public interface IImageService
 
     Task EditImageAsync(int imageId, IFormFile newImage);
 
-    Task DeleteImagesByBookIdAsync(long bookId);
+    Task DeleteImagesByProductIdAsync(long productId);
 
     Task<Image> GetImageByIdAsync(int imageId);
 
-    Task<List<Image>> GetImagesByBookIdAsync(long bookId);
+    Task<List<Image>> GetImagesByProductIdAsync(long ProductId);
 
     Task<List<Image>> GetAllImages();
 

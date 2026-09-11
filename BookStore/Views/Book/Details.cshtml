@@ -1,4 +1,4 @@
-﻿@model BookStore.Domain.Entities.Book
+﻿@model BookStore.Application.DTOs.AdminSide.Product.ProductDetailsDTO
 <body>
     <div class="page-wrapper">
         <main class="main">
@@ -84,7 +84,7 @@
 
                                     <div class="col-md-6 col-lg-5">
                                         <div class="product-details">
-                                            <h1 class="product-title">@Model.BookTitle</h1>
+                                            <h1 class="product-title">@Model.Title</h1>
                                             <!-- End .product-title -->
 
                                             <div class="ratings-container">
@@ -99,7 +99,7 @@
                                             </div><!-- End .rating-container -->
 
                                             <div class="product-price">
-                                                <span class="new-price">@Model.BookPrice تومان</span>
+                                                <span class="new-price">@Model.Price تومان</span>
                                                 @* <span class="old-price">110,000 تومان</span> *@
                                             </div><!-- End .product-price -->
 
@@ -154,12 +154,36 @@
                                             </div><!-- End .details-filter-row -->
 
                                             <div class="product-details-action">
-                                                <a href="#" class="btn-product btn-cart">
+                                                @* <a asp-area="CustomerPanel"
+                                                asp-controller="Cart"
+                                                asp-action="Add"
+                                                asp-route-productId="@Model.Id"
+                                                class="btn-product btn-cart">
                                                     <span>
                                                         افزودن به سبد
                                                         خرید
                                                     </span>
-                                                </a>
+                                                </a> *@
+                                                <form asp-area="CustomerPanel"
+                                                      asp-controller="Cart"
+                                                      asp-action="Add"
+                                                      method="post"
+                                                      class="d-inline">
+
+                                                    @Html.AntiForgeryToken()
+
+                                                    <input type="hidden"
+                                                           name="productId"
+                                                           value="@Model.Id" />
+
+                                                    <button type="submit"
+                                                            class="btn-product btn-cart">
+
+                                                        <span>افزودن به سبد خرید</span>
+
+                                                    </button>
+
+                                                </form>
 
                                                 <div class="details-action-wrapper">
                                                     <a href="#" class="btn-product btn-wishlist"
@@ -221,7 +245,7 @@
                                                         <div class="card-body">
                                                             <div class="product-desc-content">
                                                                 <p>
-                                                                    @Model.BookDescription
+                                                                    @Model.Description
                                                                 </p>
                                                             </div><!-- End .product-desc-content -->
                                                         </div><!-- End .card-body -->
@@ -527,6 +551,5 @@
                 </div><!-- End .container-fluid -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
+        </div>
 </body>
-
-</html>

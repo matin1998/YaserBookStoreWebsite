@@ -156,7 +156,7 @@ namespace BookStore.infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("BookStore.Domain.Entities.Book", b =>
+            modelBuilder.Entity("BookStore.Domain.Entities.Cart", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,27 +164,41 @@ namespace BookStore.infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("BookDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BookInventory")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookPrice")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BookTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CategoryId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
-                    b.ToTable("Books");
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("BookStore.Domain.Entities.CartItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("BookStore.Domain.Entities.Category", b =>
@@ -212,9 +226,6 @@ namespace BookStore.infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("BookId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -222,11 +233,49 @@ namespace BookStore.infrastructure.Migrations
                     b.Property<bool>("IsMainImage")
                         .HasColumnType("bit");
 
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("BookStore.Domain.Entities.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<int>("Inventory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Product");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("BookStore.Domain.Entities.Stationary", b =>
@@ -385,6 +434,18 @@ namespace BookStore.infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BookStore.Domain.Entities.Book", b =>
+                {
+                    b.HasBaseType("BookStore.Domain.Entities.Product");
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasDiscriminator().HasValue("Book");
+                });
+
             modelBuilder.Entity("BookStore.Domain.Entities.Address", b =>
                 {
                     b.HasOne("BookStore.Domain.Entities.ApplicationUser", "User")
@@ -396,26 +457,45 @@ namespace BookStore.infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BookStore.Domain.Entities.Book", b =>
+            modelBuilder.Entity("BookStore.Domain.Entities.Cart", b =>
                 {
-                    b.HasOne("BookStore.Domain.Entities.Category", "Category")
-                        .WithMany("books")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("BookStore.Domain.Entities.ApplicationUser", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("BookStore.Domain.Entities.Cart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BookStore.Domain.Entities.CartItem", b =>
+                {
+                    b.HasOne("BookStore.Domain.Entities.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookStore.Domain.Entities.Product", "Product")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BookStore.Domain.Entities.Image", b =>
                 {
-                    b.HasOne("BookStore.Domain.Entities.Book", "Book")
+                    b.HasOne("BookStore.Domain.Entities.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("BookId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Book");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -469,19 +549,40 @@ namespace BookStore.infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BookStore.Domain.Entities.Book", b =>
+                {
+                    b.HasOne("BookStore.Domain.Entities.Category", "Category")
+                        .WithMany("books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("BookStore.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Cart")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("BookStore.Domain.Entities.Book", b =>
+            modelBuilder.Entity("BookStore.Domain.Entities.Cart", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("BookStore.Domain.Entities.Category", b =>
                 {
                     b.Navigation("books");
+                });
+
+            modelBuilder.Entity("BookStore.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("CartItems");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

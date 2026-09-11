@@ -72,10 +72,10 @@ public class BookController : AdminBaseController
         var model = new EditBookDTO
         {
             Id = book.Id,
-            BookTitle = book.BookTitle,
-            BookPrice = book.BookPrice,
-            BookInventory = book.BookInventory,
-            BookDescription = book.BookDescription,
+            BookTitle = book.Title,
+            BookPrice = book.Price,
+            BookInventory = book.Inventory,
+            BookDescription = book.Description,
             Categories = _categoryService.GetListOFCategories().ToList(),
             CategoryId = book.CategoryId
         };

@@ -18,6 +18,6 @@ namespace BookStore.Domain.RepositoryInterfaces
         Task EditAnImage(Image image);
 
         Task DeleteAnImage(Image image);
-        Task<List<Image>> GetImagesByBookIdAsync(long bookId);
+        Task<List<Image>> GetImagesByProductIdAsync(long productId);
     }
 }

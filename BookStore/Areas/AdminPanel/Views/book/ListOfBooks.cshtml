@@ -41,15 +41,15 @@
                                     {
                                         <tr>
                                             <td>@book.Id</td>
-                                            <td>@book.BookTitle</td>
+                                            <td>@book.Title</td>
                                             <td>
-                                                @book.BookPrice
+                                                @book.Price
                                             </td>
                                             <td>
-                                                @book.BookInventory
+                                                @book.Inventory
                                             </td>
                                             <td>@book.Category.CategoryTitle</td>
-                                            <td>@book.BookDescription</td>
+                                            <td>@book.Description</td>
                                             <td>
                                                 <a class="badge badge-primary" style="cursor:pointer;"
                                                    asp-action="EditABook"
@@ -66,10 +66,10 @@
                                                    asp-route-bookId="@book.Id">حذف</a>
                                                    
                                                    <a class="badge badge-warning" style="cursor:pointer;"
-                                                   asp-action="BookImages"
+                                                   asp-action="ProductImages"
                                                    asp-area="AdminPanel"
                                                    asp-controller="Image"
-                                                   asp-route-bookId="@book.Id">ویرایش عکس ها</a>
+                                                   asp-route-productId="@book.Id">ویرایش عکس ها</a>
                                             </td>
                                         </tr>
                                     }

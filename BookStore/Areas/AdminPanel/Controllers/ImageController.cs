@@ -1,31 +1,38 @@
-﻿using AspNetCoreGeneratedDocument;
-using BookStore.Application.DTOs.AdminSide.Books;
+﻿/*using AspNetCoreGeneratedDocument;*/
+using BookStore.Application.DTOs.AdminSide.Product;
 using BookStore.Application.Services.Implementations;
 using BookStore.Application.Services.Interfaces;
 using BookStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BookStore.Presentation.Areas.AdminPanel.Controllers
 {
     public class ImageController : AdminBaseController
     {
-        private readonly IBookService _bookService;
         private readonly IImageService _imageService;
-        public ImageController(IBookService bookService, IImageService imageService)
+        private readonly IProductService _productService;
+        public ImageController(IImageService imageService, IProductService productService)
         {
-            _bookService = bookService;
             _imageService = imageService;
+            _productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> BookImages(long bookId)
+        public async Task<IActionResult> ProductImages(long productId)
         {
-            var book =await _bookService.GetABookByIdAsync(bookId);
-            var images = await _imageService.GetImagesByBookIdAsync(bookId);
-            var model = new BookImagesDTO
+            var product = await _productService.GetByIdAsync(productId);
+            if (product == null)
             {
-                BookId = book.Id,
-                BookTitle = book.BookTitle,
+                return NotFound();
+            }
+
+            var images = await _imageService.GetImagesByProductIdAsync(productId);
+
+            var model = new ProductImagesDTO
+            {
+                ProductId = product.Id,
+                ProductTitle = product.Title,
                 Images = images
             };
             return View(model);
@@ -33,18 +40,18 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddImages(BookImagesDTO model)
+        public async Task<IActionResult> AddImages(ProductImagesDTO model)
         {
             if (model.NewImages != null && model.NewImages.Any())
             {
                 foreach (var image in model.NewImages)
                 {
-                    await _imageService.AddImageAsync(image, model.BookId);
+                    await _imageService.AddImageAsync(image, model.ProductId);
                 }
             }
 
-            return RedirectToAction(nameof(BookImages),
-                new { bookId = model.BookId });
+            return RedirectToAction(nameof(ProductImages),
+                new { productId = model.ProductId });
         }
 
         [HttpGet]
@@ -55,12 +62,12 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             if (image == null)
                 return NotFound();
 
-            long bookId = image.BookId;
+            long productId = image.ProductId;
 
             await _imageService.DeleteImageAsync(imageId);
 
-            return RedirectToAction(nameof(BookImages),
-                new { bookId });
+            return RedirectToAction(nameof(ProductImages),
+                 new { productId });
         }
         
         public async  Task<IActionResult> SetMainImage (int imageId) 
@@ -71,10 +78,10 @@ namespace BookStore.Presentation.Areas.AdminPanel.Controllers
             if (image == null)
                 return NotFound();
 
-            long bookId = image.BookId;
+            long productId = image.ProductId;
             await _imageService.SetMainImageAsync(imageId);
-            return RedirectToAction(nameof(BookImages),
-                new { bookId });
+            return RedirectToAction(nameof(ProductImages),
+                 new { productId });
         }
 
     }

@@ -32,18 +32,18 @@ public class BookService : IBookService
     {
         #region Object Mapping
         Book book = new Book();
-        book.BookTitle = model.BookTitle;
-        book.BookDescription = model.BookDescription;
-        book.BookPrice = model.BookPrice;
-        book.BookInventory = model.BookInventory;
+        book.Title = model.BookTitle;
+        book.Description = model.BookDescription;
+        book.Price = model.BookPrice;
+        book.Inventory = model.BookInventory;
         book.CategoryId = model.CategoryId;
         //book.Category = model.Categories.FirstOrDefault(c => c.Id == model.CategoryId);
         #endregion
         List<Book> books = _bookRepository.GetListOfBooks();
-        var existingBook = books.FirstOrDefault(b => b.BookTitle == model.BookTitle);
+        var existingBook = books.FirstOrDefault(b => b.Title == model.BookTitle);
         if (existingBook != null)
         {
-            existingBook.BookInventory++;
+            existingBook.Inventory++;
             await _bookRepository.EditABook(existingBook);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -61,7 +61,7 @@ public class BookService : IBookService
 
     public async Task DeleteABook(long bookId)
     {
-        await _imageService.DeleteImagesByBookIdAsync(bookId);
+        await _imageService.DeleteImagesByProductIdAsync(bookId);
         await _bookRepository.DeleteABook(bookId);
         await _unitOfWork.SaveChangesAsync();
 
@@ -76,10 +76,10 @@ public class BookService : IBookService
         if (book == null)
             throw new Exception("Book not found");
 
-        book.BookTitle = model.BookTitle;
-        book.BookDescription = model.BookDescription;
-        book.BookPrice = model.BookPrice;
-        book.BookInventory = model.BookInventory;
+        book.Title = model.BookTitle;
+        book.Description = model.BookDescription;
+        book.Price = model.BookPrice;
+        book.Inventory = model.BookInventory;
         book.CategoryId = model.CategoryId;
 
         await _bookRepository.EditABook(book);

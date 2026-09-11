@@ -12,7 +12,7 @@ public class Image:BaseEntity
 
     public bool IsMainImage { get; set; }
 
-    public long BookId { get; set; }
+    public long ProductId { get; set; }
 
-    public Book Book { get; set; }
+    public Product Product { get; set; }
 }
