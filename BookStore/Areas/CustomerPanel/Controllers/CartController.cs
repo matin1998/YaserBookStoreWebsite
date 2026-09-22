@@ -11,7 +11,6 @@ namespace BookStore.Presentation.Areas.CustomerPanel.Controllers;
 public class CartController : CustomerBaseController
 {
     private readonly ICartService _cartService;
-    private readonly ICouponService _couponService;
     private readonly UserManager<ApplicationUser> _userManager;
 
     public CartController(
@@ -111,7 +110,7 @@ public class CartController : CustomerBaseController
         return Json(result);
     }
 
-    [HttpPost]
+    /*[HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ApplyCoupon(ApplyCouponDTO model)
     {
@@ -130,6 +129,36 @@ public class CartController : CustomerBaseController
         var result = await _couponService.ValidateCouponAsync(
             model.Code,
             cart.TotalPrice);
+
+        return Json(result);
+    }*/
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ApplyCoupon(ApplyCouponDTO model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+            return Unauthorized();
+
+        var result = await _cartService.ApplyCouponAsync(
+            user.Id,
+            model.Code);
+
+        return Json(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetCartSummary()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+            return Unauthorized();
+
+        var result = await _cartService.GetCartSummaryAsync(
+            user.Id);
 
         return Json(result);
     }

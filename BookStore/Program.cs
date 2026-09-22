@@ -70,6 +70,7 @@ public class Program
         builder.Services.AddScoped<IProductService, ProductService>();
         builder.Services.AddScoped<ICouponService, CouponService>();
         builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+        builder.Services.AddScoped<IShippingService, ShippingService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddDbContext<BookStoreDbContext>();

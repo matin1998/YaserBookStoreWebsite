@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.DTOs.Cart;
+using BookStore.Application.DTOs.Coupon;
 using BookStore.Application.Services.Interfaces;
 using BookStore.Domain.Entities;
 using BookStore.Domain.RepositoryInterfaces;
@@ -16,17 +17,20 @@ public class CartService: ICartService
     private readonly ICartRepository _cartRepository;
     private readonly ICartItemRepository _cartItemRepository;
     private readonly IProductRepository _productRepository;
+    private readonly ICouponService _couponService;
     private readonly IUnitOfWork _unitOfWork;
 
     public CartService(
         ICartRepository cartRepository,
         ICartItemRepository cartItemRepository,
         IProductRepository productRepository,
+        ICouponService couponService,
         IUnitOfWork unitOfWork)
     {
         _cartRepository = cartRepository;
         _cartItemRepository = cartItemRepository;
         _productRepository = productRepository;
+        _couponService = couponService;
         _unitOfWork = unitOfWork;
     }
 
@@ -311,6 +315,95 @@ public class CartService: ICartService
             CartTotalPrice = items.Sum(x => x.Product.Price * x.Count)
         };
     }
+    public async Task<CouponValidationResultDTO> ApplyCouponAsync(
+    long userId,
+    string code)
+    {
+        var cart = await _cartRepository.GetUserCartAsync(userId);
 
+        if (cart == null)
+        {
+            return new CouponValidationResultDTO
+            {
+                Success = false,
+                Message = "سبد خرید یافت نشد."
+            };
+        }
 
+        var items = await _cartItemRepository
+            .GetCartItemsWithProductAsync(cart.Id);
+
+        if (!items.Any())
+        {
+            return new CouponValidationResultDTO
+            {
+                Success = false,
+                Message = "سبد خرید شما خالی است."
+            };
+        }
+
+        var cartTotal = items.Sum(
+            x => (decimal)x.Product.Price * x.Count);
+
+        var result = await _couponService.ValidateCouponAsync(
+            code,
+            cartTotal);
+
+        if (!result.Success)
+            return result;
+
+        cart.CouponCode = code.Trim();
+        cart.DiscountAmount = result.DiscountAmount;
+
+        await _cartRepository.UpdateAsync(cart);
+        await _unitOfWork.SaveChangesAsync();
+
+        return result;
+    }
+    public async Task<CartSummaryDTO> GetCartSummaryAsync(long userId)
+    {
+        var cart = await _cartRepository.GetUserCartAsync(userId);
+
+        if (cart == null)
+            return new CartSummaryDTO();
+
+        var items = await _cartItemRepository
+            .GetCartItemsWithProductAsync(cart.Id);
+
+        var subtotal = items.Sum(
+            x => (decimal)x.Product.Price * x.Count);
+
+        decimal discountAmount = 0;
+
+        if (!string.IsNullOrWhiteSpace(cart.CouponCode))
+        {
+            var couponResult = await _couponService.ValidateCouponAsync(
+                cart.CouponCode,
+                subtotal);
+
+            if (couponResult.Success)
+            {
+                discountAmount = couponResult.DiscountAmount;
+                cart.DiscountAmount = discountAmount;
+            }
+            else
+            {
+                cart.CouponCode = null;
+                cart.DiscountAmount = 0;
+
+                await _cartRepository.UpdateAsync(cart);
+                await _unitOfWork.SaveChangesAsync();
+            }
+        }
+
+        var finalPrice = subtotal - discountAmount;
+
+        return new CartSummaryDTO
+        {
+            Subtotal = subtotal,
+            DiscountAmount = discountAmount,
+            ShippingPrice = 0,
+            FinalPrice = finalPrice
+        };
+    }
 }

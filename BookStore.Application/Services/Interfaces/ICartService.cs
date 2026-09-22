@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.DTOs.Cart;
+using BookStore.Application.DTOs.Coupon;
 using BookStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -24,5 +25,9 @@ public interface ICartService
     long userId,
     UpdateCartDTO model);
 
-
+    Task<CartSummaryDTO> GetCartSummaryAsync(
+    long userId);
+    Task<CouponValidationResultDTO> ApplyCouponAsync(
+    long userId,
+    string code);
 }
